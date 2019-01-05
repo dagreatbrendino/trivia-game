@@ -57,15 +57,39 @@ var display = {
         display.assignAnswer(question.incorrectAnswers[i]);
     }
 
-
     $(document).ready(function () {
         //Adds question to dom
         $("#display").append("<div class='row'><div class='col'>" + display.disQ + "</div></div>");
+
+        var val = 0;
         //Adds answers to dom
         for (j = 0; j < 4; j++){
-            $("#display").append("<div class='row'><div class='col'><button>" + display.answers[j] + "</button></div></div>");
+            //The correct answer is given a value of 1
+            if (display.answers[j] === question.correctAnswer){
+                val = 1;
+            }
+            else{
+                val = 0;
+            }
+            $("#display").append("<div class='row'><div class='col'><button class='playerAns' value =" + val + ">" + display.answers[j] + "</button></div></div>");
         }
-       
+        //When the player picks an answer
+        $(".playerAns").on("click", function(){
+            //If the answer is correct call the proper function
+            console.log(this);
+            console.log($(this).attr("value"));
+            // console.log(this.val());
+            console.log(this.value);
+            if(this.value ==1){
+                console.log("correct answer picked");
+            }
+            //else the answer is incorrect call the proper function
+            else{
+                console.log("incorrect answer picked");
+            }
+        
+        })
+        
         //question timer
             //function that will be called when the timer hits zero, it should end the users chance to answer the question and update the display
     });
