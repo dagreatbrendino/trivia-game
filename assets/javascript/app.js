@@ -88,11 +88,26 @@ var assignQuestion = function(){
     $("#timer").html("<h4>" + currentQuestion.timeleft + "</h4>");
     timer();
 }
-//function that updates the display when the correct answer is picked, and then picks a new question after a few second
-var correctAnswer = function(){
+//function that will update the display according to the result of the current question, it will use the arguments
+// correct, incorrect, and timeup 
+var questionResult = function(result){
     $("#question").empty();
-    $("#question").append("<div class = 'row'><div class='col'>Correct!</div></div>");
-    numCorrect++;
+    switch(result){
+        case "correct":
+            $("#question").append("<div class = 'row'><div class='col'>Correct!</div></div>");
+            numCorrect++;
+        break;
+        case "incorrect":
+            $("#question").append("<div class = 'row'><div class='col'>Incorrect!</div></div>");
+            $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
+            numIncorrect++;
+            break;
+        case "timeup":
+            $("#question").append("<div class = 'row'><div class='col'>Time is up!</div></div>");
+            $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
+            numUnanswered++;
+            break;
+    }
     questionIndex++;
     clearInterval(intervalId);
     if(questionIndex < questions.length){
@@ -102,36 +117,50 @@ var correctAnswer = function(){
         setTimeout(gameover, 5000);
     }
 }
-//function that updates the display when the incorrect answer is picked, and the picks a new question after a few seconds
-var incorrectAnswer = function(){
-    $("#question").empty();
-    $("#question").append("<div class = 'row'><div class='col'>Incorrect!</div></div>");
-    $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
-    numIncorrect++;
-    questionIndex++;
-    clearInterval(intervalId);
-    if(questionIndex < questions.length){
-        setTimeout(assignQuestion, 5000);
-    }
-    else{
-        setTimeout(gameover, 5000);
-    }
-}
-//function that updates the display when the timer reaches zero
-var timeup = function(){
-    $("#question").empty();
-    $("#question").append("<div class = 'row'><div class='col'>Time is up!</div></div>");
-    $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
-    numUnanswered++;
-    questionIndex++;
-    clearInterval(intervalId);
-    if(questionIndex < questions.length){
-        setTimeout(assignQuestion, 5000);
-    }
-    else{
-        setTimeout(gameover, 5000);
-    }
-}
+// //function that updates the display when the correct answer is picked, and then picks a new question after a few second
+// var correctAnswer = function(){
+//     $("#question").empty();
+//     $("#question").append("<div class = 'row'><div class='col'>Correct!</div></div>");
+//     numCorrect++;
+//     questionIndex++;
+//     clearInterval(intervalId);
+//     if(questionIndex < questions.length){
+//         setTimeout(assignQuestion, 5000);
+//     }
+//     else{
+//         setTimeout(gameover, 5000);
+//     }
+// }
+// //function that updates the display when the incorrect answer is picked, and the picks a new question after a few seconds
+// var incorrectAnswer = function(){
+//     $("#question").empty();
+//     $("#question").append("<div class = 'row'><div class='col'>Incorrect!</div></div>");
+//     $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
+//     numIncorrect++;
+//     questionIndex++;
+//     clearInterval(intervalId);
+//     if(questionIndex < questions.length){
+//         setTimeout(assignQuestion, 5000);
+//     }
+//     else{
+//         setTimeout(gameover, 5000);
+//     }
+// }
+// //function that updates the display when the timer reaches zero
+// var timeup = function(){
+//     $("#question").empty();
+//     $("#question").append("<div class = 'row'><div class='col'>Time is up!</div></div>");
+//     $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
+//     numUnanswered++;
+//     questionIndex++;
+//     clearInterval(intervalId);
+//     if(questionIndex < questions.length){
+//         setTimeout(assignQuestion, 5000);
+//     }
+//     else{
+//         setTimeout(gameover, 5000);
+//     }
+// }
 //function that is called when there are no more questions
 var gameover = function(){
     $("#question").empty();
@@ -152,7 +181,7 @@ function decrement() {
     $("#timer").html("<h4>" + currentQuestion.timeleft + "</h4>");
     if (currentQuestion.timeleft === 0) {
         clearInterval(intervalId);
-        timeup();
+        questionResult("timeup");
     }
 }
 
@@ -160,11 +189,12 @@ function decrement() {
 var questionIndex = 0;
    
 $(document).ready(function () {
-    
+    //start button that will assign the first word to the currentWord object 
     $("#start").on("click","button", function (){
         //Adds timer to dom
         $("#head").append("<div class='row'><div id=timer class='col'><h4>" + currentQuestion.timeleft + "</h4></div></div>");
         assignQuestion();
+        //start button is removed
         $("#start").empty();
     })
     //When the player picks an answer
@@ -172,16 +202,12 @@ $(document).ready(function () {
         //If the answer is correct call the proper function
         if (this.value == 1) {
             console.log("correct answer picked");
-            correctAnswer();
+            questionResult("correct");
         }
         //else the answer is incorrect call the proper function
         else {
             console.log("incorrect answer picked");
-            incorrectAnswer();
+            questionResult("incorrect");
         }
-
     })
-
-    //question timer
-    //function that will be called when the timer hits zero, it should end the users chance to answer the question and update the currentQuestion
 });
