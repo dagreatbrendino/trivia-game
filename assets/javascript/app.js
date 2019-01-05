@@ -117,50 +117,6 @@ var questionResult = function(result){
         setTimeout(gameover, 5000);
     }
 }
-// //function that updates the display when the correct answer is picked, and then picks a new question after a few second
-// var correctAnswer = function(){
-//     $("#question").empty();
-//     $("#question").append("<div class = 'row'><div class='col'>Correct!</div></div>");
-//     numCorrect++;
-//     questionIndex++;
-//     clearInterval(intervalId);
-//     if(questionIndex < questions.length){
-//         setTimeout(assignQuestion, 5000);
-//     }
-//     else{
-//         setTimeout(gameover, 5000);
-//     }
-// }
-// //function that updates the display when the incorrect answer is picked, and the picks a new question after a few seconds
-// var incorrectAnswer = function(){
-//     $("#question").empty();
-//     $("#question").append("<div class = 'row'><div class='col'>Incorrect!</div></div>");
-//     $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
-//     numIncorrect++;
-//     questionIndex++;
-//     clearInterval(intervalId);
-//     if(questionIndex < questions.length){
-//         setTimeout(assignQuestion, 5000);
-//     }
-//     else{
-//         setTimeout(gameover, 5000);
-//     }
-// }
-// //function that updates the display when the timer reaches zero
-// var timeup = function(){
-//     $("#question").empty();
-//     $("#question").append("<div class = 'row'><div class='col'>Time is up!</div></div>");
-//     $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
-//     numUnanswered++;
-//     questionIndex++;
-//     clearInterval(intervalId);
-//     if(questionIndex < questions.length){
-//         setTimeout(assignQuestion, 5000);
-//     }
-//     else{
-//         setTimeout(gameover, 5000);
-//     }
-// }
 //function that is called when there are no more questions
 var gameover = function(){
     $("#question").empty();
@@ -168,6 +124,7 @@ var gameover = function(){
     $("#question").append("<div class = 'row'><div class='col'>Correct Answers: " + numCorrect+ "</div></div>");
     $("#question").append("<div class = 'row'><div class='col'>Incorrect Answers: " + numIncorrect+ "</div></div>");
     $("#question").append("<div class = 'row'><div class='col'>Unanswered Questions: " + numUnanswered+ "</div></div>");
+    $("#restart").append("<button>Restart</button>");
 }
 
 //timer logic
@@ -192,7 +149,7 @@ $(document).ready(function () {
     //start button that will assign the first word to the currentWord object 
     $("#start").on("click","button", function (){
         //Adds timer to dom
-        $("#head").append("<div class='row'><div id=timer class='col'><h4>" + currentQuestion.timeleft + "</h4></div></div>");
+        $("#timer-con").append("<div class='row'><div id=timer class='col'><h4>" + currentQuestion.timeleft + "</h4></div></div>");
         assignQuestion();
         //start button is removed
         $("#start").empty();
@@ -209,5 +166,13 @@ $(document).ready(function () {
             console.log("incorrect answer picked");
             questionResult("incorrect");
         }
+    })
+    //restart button that is added after the game over funciton is called
+    $("#restart").on("click","button", function(){
+        $("#question").empty();
+        $("#start").append("<button>Start</button>");
+        $("#restart").empty();
+        $("#timer-con").empty();
+        questionIndex=0;
     })
 });
