@@ -141,43 +141,47 @@ var gameover = function(){
     $("#question").append("<div class = 'row'><div class='col'>Unanswered Questions: " + numUnanswered+ "</div></div>");
 }
 
-//game logic that runs timer, populates display with question and answer, and allows player to submit answer
-    var intervalId;
-    function timer() {
-        intervalId = setInterval(decrement, 1000);
-    }
+//timer logic
+var intervalId;
 
-    function decrement() {
-        currentQuestion.timeleft--;
-        $("#timer").html("<h4>" + currentQuestion.timeleft + "</h4>");
-        if (currentQuestion.timeleft === 0){
-            clearInterval(intervalId);
-            timeup();
-        }
+function timer() {
+    intervalId = setInterval(decrement, 1000);
+}
+function decrement() {
+    currentQuestion.timeleft--;
+    $("#timer").html("<h4>" + currentQuestion.timeleft + "</h4>");
+    if (currentQuestion.timeleft === 0) {
+        clearInterval(intervalId);
+        timeup();
     }
-    //question index
-    var questionIndex = 0
+}
 
+//question index
+var questionIndex = 0;
    
-    $(document).ready(function () {
-        // //Adds timer to dom
+$(document).ready(function () {
+    
+    $("#start").on("click","button", function (){
+        //Adds timer to dom
         $("#head").append("<div class='row'><div id=timer class='col'><h4>" + currentQuestion.timeleft + "</h4></div></div>");
         assignQuestion();
-        //When the player picks an answer
-        $("#question").on("click", "button", function(){
-            //If the answer is correct call the proper function
-            if(this.value ==1){
-                console.log("correct answer picked");
-                correctAnswer();
-            }
-            //else the answer is incorrect call the proper function
-            else{
-                console.log("incorrect answer picked");
-                incorrectAnswer();
-            }
-        
-        })
-        
-        //question timer
-            //function that will be called when the timer hits zero, it should end the users chance to answer the question and update the currentQuestion
-    });
+        $("#start").empty();
+    })
+    //When the player picks an answer
+    $("#question").on("click", "button", function () {
+        //If the answer is correct call the proper function
+        if (this.value == 1) {
+            console.log("correct answer picked");
+            correctAnswer();
+        }
+        //else the answer is incorrect call the proper function
+        else {
+            console.log("incorrect answer picked");
+            incorrectAnswer();
+        }
+
+    })
+
+    //question timer
+    //function that will be called when the timer hits zero, it should end the users chance to answer the question and update the currentQuestion
+});
