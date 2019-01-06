@@ -2,3 +2,12 @@
     text-align: center;
     margin: 0;
 }
+.header{
+    margin-bottom: 30px;
+}
+main{
+    margin-top: 100px;
+    width: 75%;
+    background-color: red;
+    min-height: 60vh;
+}
