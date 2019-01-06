@@ -1,16 +1,45 @@
 //Question object that contains
 var questions = [{
     //qustion
-    q: "This is a question?",
+    q: "What is Captain America's sheild made of?",
     //correct answer
-    correctAnswer: "This is the correct answer" ,
+    correctAnswer: "Vibranium" ,
     //array of incorrect answers
-    incorrectAnswers: ["This is 1 incorrect answer", "This is 2nd incorrect answer", "This is a 3rd incorrect answer" ]
+    incorrectAnswers: ["Adamantium", "Kryptonite", "Chrome" ]
 },{
-      q: "This is another question?",
-      correctAnswer: "This is the still correct answer" ,
-      incorrectAnswers: ["This is 1 incorrect answer", "This is 2nd incorrect answer", "This is a 3rd incorrect answer" ]
-  }
+        q: "What is the name of Tony Stark's personal butler?",
+        correctAnswer: "Jarvis",
+        incorrectAnswers: ["Alfred", "Jeeves", "Hal" ]
+  },
+    {
+        q: "In the Infinity Wars movies, what is Thanos trying to collect?", correctAnswer: "The Infinity Stones",
+        incorrectAnswers: ["The Infinity Gems", "The Chaos Emeralds", "The Sacred Jewels"]
+    },
+    {
+        q: "Who is Thor's adopted sibling?", correctAnswer: "Loki", incorrectAnswers: ["Odin", "Erik Selvig", "Laufey"]
+    },
+    {
+        q: "Who is the director of S.H.E.I.L.D and developer of the Avengers' Initiative", correctAnswer: "Nick Fury",
+        incorrectAnswers: ["Captain America", "Tony Stark", "Thor"]
+    },
+    {
+        q:"What was Dr. Strange's profession before he became Sorcerer Supreme?", correctAnswer: "neurosurgeon", 
+        incorrectAnswers:["professor","dermatologist","dentist"]
+    },
+    {
+        q:"What is the name of Peter Quill's superhero persona?", correctAnswer: "Star-Lord", 
+        incorrectAnswers:["Groot","Drax","Zurg"]
+    },
+    {
+        q:"What actor plays Tony Stark", correctAnswer: "Robert Downey Jr.", incorrectAnswers:["Elijah Wood", "Chris Pratt", "Chris Hemsworth"]
+    },
+    {
+        q:"Who does Bruce Banner become?", correctAnswer: "Hulk", incorrectAnswers:["Spiderman", "Ironman", "Daredevil"]
+    },
+    {
+        q:"Who is the leader of Wakanda", correctAnswer: "Black Panther", incorrectAnswers:["Iron Fist", "Kain", "Aquaman"]
+    }
+
 ]
 //Player's Score
 var numCorrect = 0;
@@ -93,15 +122,18 @@ var assignQuestion = function(){
 var questionResult = function(result){
     $("#question").empty();
     switch(result){
+        //the player clicked the correct answer
         case "correct":
             $("#question").append("<div class = 'row'><div class='col'>Correct!</div></div>");
             numCorrect++;
         break;
+        //the player clicked an incorrect answer
         case "incorrect":
             $("#question").append("<div class = 'row'><div class='col'>Incorrect!</div></div>");
             $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
             numIncorrect++;
             break;
+        //the player ran out of time
         case "timeup":
             $("#question").append("<div class = 'row'><div class='col'>Time is up!</div></div>");
             $("#question").append("<div class = 'row'><div class='col'>The correct answer was: " + currentQuestion.answers[correctInd] + "</div></div>");
@@ -110,10 +142,13 @@ var questionResult = function(result){
     }
     questionIndex++;
     clearInterval(intervalId);
+    //if there are questions left
     if(questionIndex < questions.length){
+        //after 5 seconds a new question will be chosen
         setTimeout(assignQuestion, 5000);
     }
     else{
+        //otherwise the gameover screen will be displayed after 5 seconds
         setTimeout(gameover, 5000);
     }
 }
@@ -173,6 +208,10 @@ $(document).ready(function () {
         $("#start").append("<button>Start</button>");
         $("#restart").empty();
         $("#timer-con").empty();
+        //resetting variables
         questionIndex=0;
+        numCorrect=0;
+        numIncorrect=0;
+        numUnanswered=0;
     })
 });
