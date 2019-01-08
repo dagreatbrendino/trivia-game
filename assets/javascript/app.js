@@ -5,39 +5,50 @@ var questions = [{
     //correct answer
     correctAnswer: "Vibranium" ,
     //array of incorrect answers
-    incorrectAnswers: ["Adamantium", "Kryptonite", "Chrome" ]
+    incorrectAnswers: ["Adamantium", "Kryptonite", "Chrome" ],
+    //url for gif after question is done
+    gif: "captain-america.gif"
 },{
         q: "What is the name of Tony Stark's personal butler?",
         correctAnswer: "Jarvis",
-        incorrectAnswers: ["Alfred", "Jeeves", "Hal" ]
+        incorrectAnswers: ["Alfred", "Jeeves", "Hal" ],
+        gif: "jarvis.gif"
   },
     {
         q: "In the Infinity Wars movies, what is Thanos trying to collect?", correctAnswer: "The Infinity Stones",
-        incorrectAnswers: ["The Infinity Gems", "The Chaos Emeralds", "The Sacred Jewels"]
+        incorrectAnswers: ["The Infinity Gems", "The Chaos Emeralds", "The Sacred Jewels"],
+        gif: "infinity-stones.gif"
     },
     {
-        q: "Who is Thor's adopted sibling?", correctAnswer: "Loki", incorrectAnswers: ["Odin", "Erik Selvig", "Laufey"]
+        q: "Who is Thor's adopted sibling?", correctAnswer: "Loki", incorrectAnswers: ["Odin", "Erik Selvig", "Laufey"],
+        gif: "loki.gif"
     },
     {
         q: "Who is the director of S.H.E.I.L.D and developer of the Avengers' Initiative", correctAnswer: "Nick Fury",
-        incorrectAnswers: ["Captain America", "Tony Stark", "Thor"]
+        incorrectAnswers: ["Captain America", "Tony Stark", "Thor"],
+        gif: "nick-fury.gif"
     },
     {
         q:"What was Dr. Strange's profession before he became Sorcerer Supreme?", correctAnswer: "neurosurgeon", 
-        incorrectAnswers:["professor","dermatologist","dentist"]
+        incorrectAnswers:["professor","dermatologist","dentist"],
+        gif: "dr-strange.gif"
     },
     {
         q:"What is the name of Peter Quill's superhero persona?", correctAnswer: "Star-Lord", 
-        incorrectAnswers:["Groot","Drax","Zurg"]
+        incorrectAnswers:["Groot","Drax","Zurg"],
+        gif: "star-lord.gif"
     },
     {
-        q:"What actor plays Tony Stark", correctAnswer: "Robert Downey Jr.", incorrectAnswers:["Elijah Wood", "Chris Pratt", "Chris Hemsworth"]
+        q:"What actor plays Tony Stark", correctAnswer: "Robert Downey Jr.", incorrectAnswers:["Elijah Wood", "Chris Pratt", "Chris Hemsworth"],
+        gif: "tony-stark.gif"
     },
     {
-        q:"Who does Bruce Banner become?", correctAnswer: "Hulk", incorrectAnswers:["Spiderman", "Ironman", "Daredevil"]
+        q:"Who does Bruce Banner become?", correctAnswer: "Hulk", incorrectAnswers:["Spiderman", "Ironman", "Daredevil"],
+        gif: "hulk.gif"
     },
     {
-        q:"Who is the leader of Wakanda", correctAnswer: "Black Panther", incorrectAnswers:["Iron Fist", "Kain", "Aquaman"]
+        q:"Who is the leader of Wakanda", correctAnswer: "Black Panther", incorrectAnswers:["Iron Fist", "Kain", "Aquaman"],
+        gif: "black-panther.gif"
     }
 
 ]
@@ -63,7 +74,7 @@ var currentQuestion = {
         " "
     ],
     //timer
-    timeleft: 10,
+    timeleft: 15,
     //source of fun gif or pic
     funGif: " ",
     //Assign answer to answers array
@@ -94,6 +105,7 @@ var assignQuestion = function(){
         currentQuestion.assignAnswer(questions[questionIndex].incorrectAnswers[i]);
     }
     $("#question").empty();
+    $("#question-gif").empty();
     //Adds question to the dom
     $("#question").append("<div class='row'><div class='col'>" + currentQuestion.disQ + "</div></div>");
 
@@ -113,7 +125,7 @@ var assignQuestion = function(){
             $("#question").append("<div class='row'><div class='col'><button class='playerAns' value =" + val + ">" + currentQuestion.answers[j] + "</button></div></div>");
     }
     //resetting the timer
-    currentQuestion.timeleft =10;
+    currentQuestion.timeleft =15;
     $("#timer").html("<h4>" + currentQuestion.timeleft + "</h4>");
     timer();
 }
@@ -140,6 +152,7 @@ var questionResult = function(result){
             numUnanswered++;
             break;
     }
+    $("#question-gif").append("<img class='img-fluid mx-auto d-block resultgif' src=assets/images/" + questions[questionIndex].gif + " alt='question-gif'/>");
     questionIndex++;
     clearInterval(intervalId);
     //if there are questions left
@@ -155,6 +168,7 @@ var questionResult = function(result){
 //function that is called when there are no more questions
 var gameover = function(){
     $("#question").empty();
+    $("#question-gif").empty();
     $("#question").append("<div class = 'row'><div class='col'>That's all of the questions! Here's your score</div></div>");
     $("#question").append("<div class = 'row'><div class='col'>Correct Answers: " + numCorrect+ "</div></div>");
     $("#question").append("<div class = 'row'><div class='col'>Incorrect Answers: " + numIncorrect+ "</div></div>");
