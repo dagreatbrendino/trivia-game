@@ -1,6 +1,13 @@
+body{
+    background-image: url(../images/marvel-background.jpg);
+}
+/* h1{
+    color: white;
+} */
 .header, .timer-text, .question-con, .start-button, .restart-button{
     text-align: center;
     margin: 0;
+    color: white;
 }
 .header{
     margin-bottom: 30px;
@@ -10,4 +17,16 @@ main{
     width: 75%;
     background-color: red;
     min-height: 60vh;
+    border: 3px solid white;
+}
+
+.question-con button{
+    color: white;
+    background-color: red;
+    padding: 3px 14px;
+    border: none;
+}
+
+.question-con button:hover{
+    background-color: rgb(255, 208, 0);
 }
