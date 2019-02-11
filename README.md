@@ -15,7 +15,7 @@ After every question has been completed, the player will be shown the total **co
 
 ### Technical Aspects
 #### Javascript & jQuery
-The trivia questions are stored in an array of objects where each question has the following properties: **q**, **correctAnswer**, **incorrectAnswers**, and **gif**
+The trivia questions are stored in an array called **questions** where each question is an object with the following properties: **q**, **correctAnswer**, **incorrectAnswers**, and **gif**
 ##### Example
 ```javascript
 {
@@ -27,7 +27,6 @@ The trivia questions are stored in an array of objects where each question has t
 ```
 Question objects from the array are assigned to a variable **currentQuestion** with the **assignQuestion()** function 
 ```javascript
-{
 var currentQuestion = {
     disQ: " ",
     answers: [
@@ -75,5 +74,6 @@ var assignQuestion = function(){
     currentQuestion.timeleft =15;
     $("#timer").html("<h4>" + currentQuestion.timeleft + "</h4>");
     timer();
+}
 ```
-After a question object from the questions array is assigned to the **currentQuestion**, jQuery is used to update the question on the DOM. The correct answer is given a value of 1, and the incorrect answers are given a value of 0, wich will be important in determining the result of the question. Finally, the timer will be reset. 
+After a question object from the **questions** array is assigned to **currentQuestion**, jQuery is used to update the question on the DOM. The correct answer is given a value of 1, and the incorrect answers are given a value of 0, wich will be important in determining the result of the question. Finally, the timer will be reset. 
