@@ -110,3 +110,6 @@ var questionResult = function(result){
 }
 ```
 After 5 seconds the next question will be assigned. If there are no more questions the gameover screen will be displayed. 
+![Game Over](assets/images/marvelgameover.png)
+#### Bootstrap 
+The Bootstrap grid system is used for the layout. Additionally, the img-fluid class is utilized to make the game responsive. 
